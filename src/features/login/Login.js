@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
   LoginAsync,
   SsoLoginAsync,
@@ -26,6 +26,8 @@ import { useFormik } from 'formik';
 import { LoginValidate } from '../../util/functions';
 import Whitelist from './components/Whitelist';
 import { federatedSignIn } from '../../auth/cognitoAuth';
+import Cookies from 'js-cookie';
+import RedirectUrl from '../../components/Redirect';
 const StaticImage = styled.img`
 position: absolute;
 width: inherit;
@@ -115,7 +117,8 @@ const Login = (props) => {
 
   const [val, setVal] = React.useState(Object.keys(localStorage));
   const idToken = localStorage.getItem('CognitoIdentityServiceProvider.4ufoedd4so0jq9j8fd7k3oroua.' + localStorage.getItem('CognitoIdentityServiceProvider.4ufoedd4so0jq9j8fd7k3oroua.LastAuthUser') + '.idToken');
-
+  const navigate = useNavigate();
+  const location = useLocation();
   useEffect(() => {
     dispatch(setPageTitle('Login/Signup'));
     console.log('Logged In2')
@@ -187,15 +190,15 @@ const Login = (props) => {
   };
   useEffect(() => {
     if (result && result.code === 200) {
-      // Navigate(redirect, { replace: true });
+
+      navigate(-1);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [result]);
 
-  if (localStorage.getItem('idToken')) {
-    console.log('Redirect user back');
-    console.log(routes.app.path);
+  if (Cookies.get('idToken')) {
+    navigate(-1);
     // Navigate(routes.app.path, { replace: true });
     return <></>;
   } else {
