@@ -46,7 +46,6 @@ const LoginFormWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* width: 50vw; */
   margin-left: 50vw;
   min-height: 100vh;
   min-height: -webkit-fill-available;
