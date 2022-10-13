@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
 export const LargeTitle = styled.span`
-  //styleName: xLarge (our default)/Large Title;
-  font-family: "Lora";
+  font-family: 'Lora';
   font-size: 36px;
   font-weight: 500;
   line-height: 45px;
@@ -12,7 +11,7 @@ export const LargeTitle = styled.span`
 
 export const Title1 = styled.span`
   //styleName: xLarge (our default)/Title 1;
-  font-family: "Lora";
+  font-family: 'Lora';
   font-size: 30px;
   font-weight: 500;
   line-height: 38px;
@@ -22,7 +21,7 @@ export const Title1 = styled.span`
 
 export const Title2 = styled.span`
   //styleName: xLarge (our default)/Title 2;
-  font-family: "Lora";
+  font-family: 'Lora';
   font-size: 24px;
   font-weight: 600;
   line-height: 30px;
@@ -104,7 +103,7 @@ export const Footnote = styled.span`
 export const Caption1 = styled.span`
   //styleName: xLarge (our default)/Caption 1;
   font-family: "Inter";
-  font-size: 14px;
+  /* font-size: 14px; */
   font-weight: 500;
   line-height: 125%;
   letter-spacing: -0.05em;
@@ -114,7 +113,7 @@ export const Caption1 = styled.span`
 export const Caption2 = styled.span`
   //styleName: xLarge (our default)/Caption 2;
   font-family: "Inter";
-  font-size: 13px;
+  /* font-size: 13px; */
   font-weight: 500;
   line-height: 125%;
   letter-spacing: -0.05em;

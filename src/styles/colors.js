@@ -1,3 +1,4 @@
+
 var colors_R2 = {
   // Neutrals
   neutral600: '11,12,15',
@@ -63,6 +64,7 @@ const theme_R2 = {
   //card Component
   cardBackground: `rgba(${colors_R2.card_bg_white})`,
   rightCkick: `rgba(${colors_R2.rightCkick})`,
+  
 };
 
 const theme = theme_R2;
