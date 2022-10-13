@@ -17,13 +17,13 @@ const StyledInput = styled.input`
   border: 1px solid
     rgb(
       ${(props) =>
-        props.errorCondition
-          ? props.theme.colors.error400
-          : props.theme.colors.neutral100}
+    props.errorCondition
+      ? props.theme.colors.error400
+      : props.theme.colors.neutral100}
     );
   border-radius: 8px;
   font-family: "Inter";
-  font-size: 19px;
+  font-size: 22px;
   font-weight: 400;
   line-height: 24px;
   letter-spacing: 0em;
@@ -36,9 +36,9 @@ const StyledInput = styled.input`
     border: 1px solid
       rgb(
         ${(props) =>
-          props.errorCondition
-            ? props.theme.colors.error400
-            : props.theme.colors.neutral600}
+    props.errorCondition
+      ? props.theme.colors.error400
+      : props.theme.colors.neutral600}
       );
     box-shadow: 0px 2px 2px rgba(46, 49, 62, 0.05),
       0px 4px 4px rgba(46, 49, 62, 0.05), 0px 8px 8px rgba(46, 49, 62, 0.05),
@@ -48,7 +48,7 @@ const StyledInput = styled.input`
   }
 
   ::placeholder {
-    color: rgb(${(props) => props.theme.colors.neutral200});
+    color: rgb(${(props) => props.theme.colors.white});
   }
 `;
 

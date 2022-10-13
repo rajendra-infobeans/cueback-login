@@ -28,14 +28,14 @@ import Whitelist from './components/Whitelist';
 import { federatedSignIn } from '../../auth/cognitoAuth';
 const StaticImage = styled.img`
 position: absolute;
-width: inherit;
+width: 100%;
 height: 100%;
+object-fit: cover;
 `
 const LoginImageWrapper = styled.div`
   position: fixed;
   width: 50vw;
-  height: 100vh;
-  height: -webkit-fill-available;
+  height: 100%;
 
   @media screen and (max-width: 800px) {
     display: none;
@@ -46,7 +46,6 @@ const LoginFormWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50vw;
   margin-left: 50vw;
   min-height: 100vh;
   min-height: -webkit-fill-available;
@@ -209,16 +208,13 @@ const Login = (props) => {
             alt={'Login Image'}
             style={{
               position: 'absolute',
-              top: 0,
-              right: 0,
-              bottom: 0,
-              left: 0,
+              inset: '-8px'
             }}
           />
         </LoginImageWrapper>
         <LoginFormWrapper data-testid="LoginForm">
           <LoginFormContainer onSubmit={formik.handleSubmit}>
-            <LargeTitle>Login</LargeTitle>
+            <LargeTitle style={{fontFamily:'Lora'}}>Login</LargeTitle>
             <InputGroup>
               <Input
                 label="Email"
