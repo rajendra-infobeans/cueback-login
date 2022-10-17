@@ -4,6 +4,7 @@ import { LoginApi, SsoLogin } from '../../app-api/api';
 import { FederatedSignIn, SignInApi } from '../../app-api/newApi';
 import { loginObject, loginResponse } from '../../util/Format';
 import jwt_decode from 'jwt-decode';
+import Cookies from 'js-cookie';
 
 export const LoginAsync = createAsyncThunk('login/LoginApi', async (obj) => {
   const payload = process.env.REACT_APP_NEW_API === 'TRUE' ? obj : loginObject(obj)
@@ -17,6 +18,13 @@ export const LoginAsync = createAsyncThunk('login/LoginApi', async (obj) => {
     localStorage.setItem('email', result.data.email);
     localStorage.setItem('exp', result.data.exp);
     localStorage.setItem('fullName',result.data.fullName);
+    Cookies.set('uid', result.data.uid, { domain: 'local-mystories.com' });
+    Cookies.set('idToken', result.data.token.idToken, { domain: 'local-mystories.com' });
+    Cookies.set('refreshToken', result.data.token.refreshToken, { domain: 'local-mystories.com' });
+    Cookies.set('auth_time', result.data.auth_time, { domain: 'local-mystories.com' });
+    Cookies.set('email', result.data.email, { domain: 'local-mystories.com' });
+    Cookies.set('exp', result.data.exp, { domain: 'local-mystories.com' });
+    Cookies.set('fullName',result.data.fullName, { domain: 'local-mystories.com' });
   }
   return result;
 });
@@ -24,6 +32,8 @@ export const LoginAsync = createAsyncThunk('login/LoginApi', async (obj) => {
 export const GoogleLoginAsync = createAsyncThunk('login/GoogleLogin',async () => {
   const idToken = localStorage.getItem('CognitoIdentityServiceProvider.4ufoedd4so0jq9j8fd7k3oroua.' + localStorage.getItem('CognitoIdentityServiceProvider.4ufoedd4so0jq9j8fd7k3oroua.LastAuthUser') + '.idToken');
   const refreshToken = localStorage.getItem('CognitoIdentityServiceProvider.4ufoedd4so0jq9j8fd7k3oroua.' + localStorage.getItem('CognitoIdentityServiceProvider.4ufoedd4so0jq9j8fd7k3oroua.LastAuthUser') + '.refreshToken');
+  // const idToken = localStorage.getItem('CognitoIdentityServiceProvider.4ufoedd4so0jq9j8fd7k3oroua.' + localStorage.getItem('CognitoIdentityServiceProvider.4ufoedd4so0jq9j8fd7k3oroua.LastAuthUser') + '.idToken');
+  // const refreshToken = localStorage.getItem('CognitoIdentityServiceProvider.4ufoedd4so0jq9j8fd7k3oroua.' + localStorage.getItem('CognitoIdentityServiceProvider.4ufoedd4so0jq9j8fd7k3oroua.LastAuthUser') + '.refreshToken');
   const decoded = jwt_decode(idToken);
   const obj = {
     'cognitoUid': decoded.sub,
@@ -40,6 +50,11 @@ export const GoogleLoginAsync = createAsyncThunk('login/GoogleLogin',async () =>
     localStorage.setItem('refreshToken', refreshToken);
     localStorage.setItem('auth_time', Math.floor(new Date().getTime() / 1000));
     localStorage.setItem('email', decoded.email);
+    Cookies.set('uid', decoded.sub);
+    Cookies.set('idToken', idToken);
+    Cookies.set('refreshToken', refreshToken);
+    Cookies.set('auth_time', Math.floor(new Date().getTime() / 1000));
+    Cookies.set('email', decoded.email);
   }
   return response;
 })
@@ -54,6 +69,12 @@ export const SsoLoginAsync = createAsyncThunk('login/SsoLoginApi', async (obj) =
     localStorage.setItem('auth_time', response.data.auth_time);
     localStorage.setItem('email', response.data.email);
     localStorage.setItem('exp', response.data.exp);
+    Cookies.set('uid', response.data.uid);
+    Cookies.set('idToken', response.data.token.idToken);
+    Cookies.set('refreshToken', response.data.token.refreshToken);
+    Cookies.set('auth_time', response.data.auth_time);
+    Cookies.set('email', response.data.email);
+    Cookies.set('exp', response.data.exp);
   }
   return response;
 }

@@ -27,7 +27,7 @@ import { LoginValidate } from '../../util/functions';
 import Whitelist from './components/Whitelist';
 import { federatedSignIn } from '../../auth/cognitoAuth';
 import Cookies from 'js-cookie';
-import RedirectUrl from '../../components/Redirect';
+// import RedirectUrl from '../../components/Redirect';
 const StaticImage = styled.img`
 position: absolute;
 width: 100%;
@@ -189,15 +189,24 @@ const Login = (props) => {
   };
   useEffect(() => {
     if (result && result.code === 200) {
-
-      navigate(-1);
+      if (Cookies.get('location-redirect')) {
+        window.location.assign(Cookies.get('location-redirect'));
+      }
+      else {
+        navigate(-1);
+      }
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [result]);
 
   if (Cookies.get('idToken')) {
-    navigate(-1);
+    if (Cookies.get('location-redirect')) {
+      window.location.assign(Cookies.get('location-redirect'));
+    }
+    else {
+      navigate(-1);
+    }
     // Navigate(routes.app.path, { replace: true });
     return <></>;
   } else {
