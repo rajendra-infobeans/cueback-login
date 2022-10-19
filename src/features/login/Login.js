@@ -120,7 +120,6 @@ const Login = (props) => {
   const location = useLocation();
   useEffect(() => {
     dispatch(setPageTitle('Login/Signup'));
-    console.log('Logged In2')
   }, [dispatch]);
   const result = useSelector(selectLoginResponse);
   setTimeout(() => { setVal(Object.keys(localStorage)) }, [5000]);
@@ -192,9 +191,6 @@ const Login = (props) => {
       if (Cookies.get('location-redirect')) {
         window.location.assign(Cookies.get('location-redirect'));
       }
-      else {
-        navigate(-1);
-      }
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -204,11 +200,9 @@ const Login = (props) => {
     if (Cookies.get('location-redirect')) {
       window.location.assign(Cookies.get('location-redirect'));
     }
-    else {
-      navigate(-1);
-    }
-    // Navigate(routes.app.path, { replace: true });
-    return <></>;
+    return <>
+    <h5>Logged in successfully...!</h5>
+    </>;
   } else {
     return (
       <div className="login" data-testid="LoginPage">

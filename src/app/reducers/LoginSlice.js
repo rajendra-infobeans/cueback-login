@@ -3,6 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { LoginApi, SsoLogin } from '../../app-api/api';
 import { FederatedSignIn, SignInApi } from '../../app-api/newApi';
 import { loginObject, loginResponse } from '../../util/Format';
+import { getDomain } from '../../util/functions';
 import jwt_decode from 'jwt-decode';
 import Cookies from 'js-cookie';
 
@@ -10,21 +11,15 @@ export const LoginAsync = createAsyncThunk('login/LoginApi', async (obj) => {
   const payload = process.env.REACT_APP_NEW_API === 'TRUE' ? obj : loginObject(obj)
   const response = process.env.REACT_APP_NEW_API === 'TRUE' ? await SignInApi(payload) : await LoginApi(payload);
   const result = process.env.REACT_APP_NEW_API === 'TRUE' ? response : loginResponse(response);
+  const domain = getDomain();
   if (result.code === 200) {
-    localStorage.setItem('uid', result.data.uid);
-    localStorage.setItem('idToken', result.data.token.idToken);
-    localStorage.setItem('refreshToken', result.data.token.refreshToken);
-    localStorage.setItem('auth_time', result.data.auth_time);
-    localStorage.setItem('email', result.data.email);
-    localStorage.setItem('exp', result.data.exp);
-    localStorage.setItem('fullName',result.data.fullName);
-    Cookies.set('uid', result.data.uid, { domain: 'local-mystories.com' });
-    Cookies.set('idToken', result.data.token.idToken, { domain: 'local-mystories.com' });
-    Cookies.set('refreshToken', result.data.token.refreshToken, { domain: 'local-mystories.com' });
-    Cookies.set('auth_time', result.data.auth_time, { domain: 'local-mystories.com' });
-    Cookies.set('email', result.data.email, { domain: 'local-mystories.com' });
-    Cookies.set('exp', result.data.exp, { domain: 'local-mystories.com' });
-    Cookies.set('fullName',result.data.fullName, { domain: 'local-mystories.com' });
+    Cookies.set('uid', result.data.uid, { domain: domain });
+    Cookies.set('idToken', result.data.token.idToken, { domain: domain });
+    Cookies.set('refreshToken', result.data.token.refreshToken, { domain: domain });
+    Cookies.set('auth_time', result.data.auth_time, { domain: domain });
+    Cookies.set('email', result.data.email, { domain: domain });
+    Cookies.set('exp', result.data.exp, { domain: domain });
+    Cookies.set('fullName',result.data.fullName, { domain: domain });
   }
   return result;
 });
@@ -43,18 +38,13 @@ export const GoogleLoginAsync = createAsyncThunk('login/GoogleLogin',async () =>
         'primaryEmail': decoded.email
   };
   const response = await FederatedSignIn(obj);
+  const domain = getDomain();
   if(response.code === 200) {
-    localStorage.clear();
-    localStorage.setItem('uid', decoded.sub);
-    localStorage.setItem('idToken', idToken);
-    localStorage.setItem('refreshToken', refreshToken);
-    localStorage.setItem('auth_time', Math.floor(new Date().getTime() / 1000));
-    localStorage.setItem('email', decoded.email);
-    Cookies.set('uid', decoded.sub);
-    Cookies.set('idToken', idToken);
-    Cookies.set('refreshToken', refreshToken);
-    Cookies.set('auth_time', Math.floor(new Date().getTime() / 1000));
-    Cookies.set('email', decoded.email);
+    Cookies.set('uid', decoded.sub, { domain: domain });
+    Cookies.set('idToken', idToken, { domain: domain });
+    Cookies.set('refreshToken', refreshToken, { domain: domain });
+    Cookies.set('auth_time', Math.floor(new Date().getTime() / 1000), { domain: domain });
+    Cookies.set('email', decoded.email, { domain: domain });
   }
   return response;
 })
@@ -62,19 +52,14 @@ export const GoogleLoginAsync = createAsyncThunk('login/GoogleLogin',async () =>
 export const SsoLoginAsync = createAsyncThunk('login/SsoLoginApi', async (obj) => {
   const result = await SsoLogin(obj);
   const response = loginResponse(result);
+  const domain = getDomain();
   if (response.code === 200) {
-    localStorage.setItem('uid', response.data.uid);
-    localStorage.setItem('idToken', response.data.token.idToken);
-    localStorage.setItem('refreshToken', response.data.token.refreshToken);
-    localStorage.setItem('auth_time', response.data.auth_time);
-    localStorage.setItem('email', response.data.email);
-    localStorage.setItem('exp', response.data.exp);
-    Cookies.set('uid', response.data.uid);
-    Cookies.set('idToken', response.data.token.idToken);
-    Cookies.set('refreshToken', response.data.token.refreshToken);
-    Cookies.set('auth_time', response.data.auth_time);
-    Cookies.set('email', response.data.email);
-    Cookies.set('exp', response.data.exp);
+    Cookies.set('uid', response.data.uid, { domain: domain });
+    Cookies.set('idToken', response.data.token.idToken, { domain: domain });
+    Cookies.set('refreshToken', response.data.token.refreshToken, { domain: domain });
+    Cookies.set('auth_time', response.data.auth_time, { domain: domain });
+    Cookies.set('email', response.data.email, { domain: domain });
+    Cookies.set('exp', response.data.exp, { domain: domain });
   }
   return response;
 }
